@@ -11,5 +11,3 @@ vtp mode server
 vtp domain TEST
 vtp password __VTPPASS__ hidden
 vtp pruning
-no vtp ethernet0/0
-no vtp ethernet0/1
