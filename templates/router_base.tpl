@@ -4,7 +4,7 @@ hostname __HOSTNAME__
 ip domain-name __DOMAIN__
 no ip domain-lookup
 service password-encryption
-enable secret __PRIVILEGEDPASS__ algorithm-type scrypt
+enable secret __ENABLESECRET__ algorithm-type scrypt
 username admin privilege 15 secret __USERPASS__
 banner motd ^__MOTDBANNER__^
 ntp server __NTPSERVER__
@@ -18,7 +18,7 @@ router ospf 1
  passive-interface default
 exit
 interface Loopback0
- ip ospf 1 area __OSPF_AREA__
+ ip ospf 1 area __OSPFAREA__
 exit
 end
 write memory
