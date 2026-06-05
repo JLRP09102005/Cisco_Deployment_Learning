@@ -25,9 +25,11 @@ render_template()
 
         else
 
+            sed "s|${line}|${subs_array[$line]}|g" "$tpl_route"
+
         fi
 
-        [[ -z "$password" ]] && unset password
+        [[ ! -z "$password" ]] && unset password
 
     done <<<"$marks"
 }
