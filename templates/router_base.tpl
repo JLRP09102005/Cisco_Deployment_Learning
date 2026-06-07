@@ -4,8 +4,8 @@ hostname __HOSTNAME__
 ip domain-name __DOMAIN__
 no ip domain-lookup
 service password-encryption
-enable secret __ENABLESECRET__ algorithm-type scrypt
-username admin privilege 15 secret __USERPASS__
+enable secret __SECRET:ENABLESECRET__ algorithm-type scrypt
+username admin privilege 15 secret __SECRET:USERPASS__
 banner motd ^__MOTDBANNER__^
 ntp server __NTPSERVER__
 line vty 0 4

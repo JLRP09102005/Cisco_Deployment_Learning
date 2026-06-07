@@ -6,11 +6,12 @@ ssh_init()
 {
     if [[ ! -f "$SSH_KEY" ]]; then
 
-        log_info "SHH key not found, generating new one..."
+        log_info "SSH key not found, generating new one..."
         ssh-keygen -t ed25519 -f "$SSH_KEY" -C "nexacore-automation" -N ""
         log_ok "New key generated at $SSH_KEY"
-        log_warn "Remember to copy the PUBKEY to the pendign config devices before continue"
-        log_info "Puiblic key: $(cat "$SSH_KEY")"
+        log_warn "Remember to copy the PUBKEY to the pendind config devices before continue"
+        log_info "Public key: $(cat "${SSH_KEY}.pub")"
+        exit 1
 
     fi
 }
@@ -35,7 +36,7 @@ ssh_config()
 {
     [[ -z "$1" ]] && return
     [[ -z "$2" ]] && return
-    [[ -f "$3" ]] && return
+    [[ ! -f "$3" ]] && return
 
     local host user file
     host="$1"
@@ -54,8 +55,9 @@ ssh_backup()
     local host user filename date
     host="$1"
     user="$2"
-    filename="${$3:-'config-file'}"
+    filename="${3:-config-file}"
     date="$(date "+%y%m%d_%H%M%S")"
 
+    mkdir -p backups
     ssh -i "$SSH_KEY" -o StrictHostKeyChecking=no -o ConnectTimeout=5 -o BatchMode=yes "${user}@${host}" "show running-config" > backups/${filename}_${date}.cfg
 }
