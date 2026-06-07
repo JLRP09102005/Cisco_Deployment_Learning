@@ -1,5 +1,7 @@
 #!/bin/bash
 
+LOG_FILE="${LOG_FILE:-/dev/null}"
+
 #==== ANSI CODES ====
 NC="\033[0m"
 BLUE="\033[1;34m"
@@ -17,7 +19,6 @@ log_init()
 log_info()
 {
     [[ -z "$1" ]] && return
-    LOG_FILE="${LOG_FILE:-/dev/null}"
 
     local date="$(date '+%d-%m-%y_%H%M%S')"
     printf "%b%s:%s%b\n" "$BLUE" "$date" "$1" "$NC" | tee -a "$LOG_FILE"
@@ -26,7 +27,6 @@ log_info()
 log_ok()
 {
     [[ -z "$1" ]] && return
-    LOG_FILE="${LOG_FILE:-/dev/null}"
 
     local date="$(date '+%d-%m-%y_%H%M%S')"
     printf "%b%s:%s%b\n" "$GREEN" "$date" "$1" "$NC" | tee -a "$LOG_FILE"
@@ -35,7 +35,6 @@ log_ok()
 log_warn()
 {
     [[ -z "$1" ]] && return
-    LOG_FILE="${LOG_FILE:-/dev/null}"
 
     local date="$(date '+%d-%m-%y_%H%M%S')"
     printf "%b%s:%s%b\n" "$YELLOW" "$date" "$1" "$NC" | tee -a "$LOG_FILE"
@@ -44,7 +43,6 @@ log_warn()
 log_error()
 {
     [[ -z "$1" ]] && return
-    LOG_FILE="${LOG_FILE:-/dev/null}"
 
     local date="$(date '+%d-%m-%y_%H%M%S')"
     printf "%b%s:%s%b\n" "$RED" "$date" "$1" "$NC" | tee -a "$LOG_FILE"
