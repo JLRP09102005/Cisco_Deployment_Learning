@@ -1,0 +1,4 @@
+[1;34m08-06-26_201146:SSH key not found, generating new one...[0m
+[32m08-06-26_201146:New key generated at /root/.ssh/nexacore_lab[0m
+[1;33m08-06-26_201146:Remember to copy the PUBKEY to the pendind config devices before continue[0m
+[1;34m08-06-26_201146:Public key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM+cwfMF/ZMJuOrReXit/MdE9nr/0rqxZhrw13LHvsc2 nexacore-automation[0m

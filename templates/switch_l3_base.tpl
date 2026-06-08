@@ -8,6 +8,7 @@ enable secret __SECRET:ENABLESECRET__ algorithm-type scrypt
 username admin privilege 15 secret __SECRET:USERPASS__
 banner motd ^__MOTDBANNER__^
 ntp server __NTPSERVER__
+ip routing
 line vty 0 4
  login local
  transport input ssh
@@ -17,14 +18,11 @@ router ospf 1
  router-id __OSPFID__
  passive-interface default
 exit
-ip routing
 vtp version 3
 vtp mode server
 vtp domain __VTPDOMAIN__
 vtp password __SECRET:VTPPASS__ hidden
 vtp pruning
-end
-write memory
 vlan 10
  name users
  exit
@@ -65,3 +63,18 @@ standby 2 ip __HSRP_GROUP2_IP__
 standby 2 priority __HSRP_GROUP2_PRIORITY__
 standby 2 preempt
 standby 2 authentication md5 key-string __SECRET:HSRP_GROUP2_KEY__
+standby 3 ip __HSRP_GROUP3_IP__
+standby 3 priority __HSRP_GROUP3_PRIORITY__
+standby 3 preempt
+standby 3 authentication key-string __SECRET:HSRP_GROUP3_KEY__
+standby 4 ip __HSRP_GROUP4_IP__
+standby 4 priority __HSRP_GROUP4_PRIORITY__
+standby 4 preempt
+standby 4 authentication key-string __SECRET:HSRP_GROUP4_KEY__
+spanning-tree vlan 10 priority __STP_VLAN10_PRIORITY__
+spanning-tree vlan 20 priority __STP_VLAN20_PRIORITY__
+spanning-tree vlan 30 priority __STP_VLAN30_PRIORITY__
+spanning-tree vlan 40 priority __STP_VLAN40_PRIORITY__
+spanning-tree vlan 99 priority __STP_VLAN99_PRIORITY__
+end
+write memory
