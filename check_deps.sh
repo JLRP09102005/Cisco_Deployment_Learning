@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ## CHECKING COMMAND DEPENDENCES
-[[ ! ssh -V > /dev/null ]] && log_error "DEPENDENCES: SSH not installed"
-[[ ! mktemp --version > /dev/null ]] && log_error "DEPENDENCES: MKTEMP not installed"
-[[ ! date --version > /dev/null ]] && log_error "DEPENDENCES: DATE not installed"
+ssh -V &> /dev/null || log_error "DEPENDENCES: SSH not installed"
+mktemp --version &> /dev/null || log_error "DEPENDENCES: MKTEMP not installed"
+date --version &> /dev/null || log_error "DEPENDENCES: DATE not installed"
 
 ## CHECKING SCRIPT FILE DEPENDENCES
 
