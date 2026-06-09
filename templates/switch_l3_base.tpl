@@ -42,35 +42,45 @@ vlan 999
  exit
 interface vlan 10
  ip address __SVI_10_IP__ __SVI_10_MASK__
+ ip ospf 1 area __OSPF_AREA__
+ standby 1 ip __HSRP_GROUP1_IP__
+ standby 1 priority __HSRP_GROUP1_PRIORITY__
+ standby 1 preempt
+ standby 1 authentication md5 key-string __SECRET:HSRP_GROUP1_KEY__
+ no shutdown
  exit
 interface vlan 20
  ip address __SVI_20_IP__ __SVI_20_MASK__
+ ip ospf 1 area __OSPF_AREA__
+ standby 2 ip __HSRP_GROUP2_IP__
+ standby 2 priority __HSRP_GROUP2_PRIORITY__
+ standby 2 preempt
+ standby 2 authentication md5 key-string __SECRET:HSRP_GROUP2_KEY__
+ no shutdown
  exit
 interface vlan 30
  ip address __SVI_30_IP__ __SVI_30_MASK__
+ ip ospf 1 area __OSPF_AREA__
+ standby 3 ip __HSRP_GROUP3_IP__
+ standby 3 priority __HSRP_GROUP3_PRIORITY__
+ standby 3 preempt
+ standby 3 authentication md5 key-string __SECRET:HSRP_GROUP3_KEY__
+ no shutdown
  exit
 interface vlan 40
  ip address __SVI_40_IP__ __SVI_40_MASK__
+ ip ospf 1 area __OSPF_AREA__
+ standby 4 ip __HSRP_GROUP4_IP__
+ standby 4 priority __HSRP_GROUP4_PRIORITY__
+ standby 4 preempt
+ standby 4 authentication md5 key-string __SECRET:HSRP_GROUP4_KEY__
+ no shutdown
  exit
 interface vlan 99
  ip address __SVI_99_IP__ __SVI_99_MASK__
+ ip ospf 1 area __OSPF_AREA__
+ no shutdown
  exit
-standby 1 ip __HSRP_GROUP1_IP__
-standby 1 priority __HSRP_GROUP1_PRIORITY__
-standby 1 preempt
-standby 1 authentication md5 key-string __SECRET:HSRP_GROUP1_KEY__
-standby 2 ip __HSRP_GROUP2_IP__
-standby 2 priority __HSRP_GROUP2_PRIORITY__
-standby 2 preempt
-standby 2 authentication md5 key-string __SECRET:HSRP_GROUP2_KEY__
-standby 3 ip __HSRP_GROUP3_IP__
-standby 3 priority __HSRP_GROUP3_PRIORITY__
-standby 3 preempt
-standby 3 authentication key-string __SECRET:HSRP_GROUP3_KEY__
-standby 4 ip __HSRP_GROUP4_IP__
-standby 4 priority __HSRP_GROUP4_PRIORITY__
-standby 4 preempt
-standby 4 authentication key-string __SECRET:HSRP_GROUP4_KEY__
 spanning-tree vlan 10 priority __STP_VLAN10_PRIORITY__
 spanning-tree vlan 20 priority __STP_VLAN20_PRIORITY__
 spanning-tree vlan 30 priority __STP_VLAN30_PRIORITY__
