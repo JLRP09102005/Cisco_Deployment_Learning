@@ -1,0 +1,99 @@
+# cisco-bash-config
+
+Bash scripts to automate the configuration of Cisco devices in network environments.
+
+## System Requirements
+
+- **Operating System:** Debian-based distribution (Debian, Ubuntu, Linux Mint, etc.)
+- **Permissions:** No superuser (`root`) privileges required. All scripts are designed to run as a standard user.
+
+## Project Structure
+
+```
+Cisco_Deployment_Learning/
+├── .env                        # Environment variables (credentials, global settings)
+├── .README                     # This file
+├── inventory.conf              # Network device inventory
+├── check_deps.sh               # Dependency checker script
+├── deploy.sh                   # Main deployment script
+├── lib/                        # Shared library scripts
+│   ├── log.sh                  # Logging utilities
+│   ├── render.sh               # Template rendering engine
+│   └── ssh.sh                  # SSH connection helpers
+├── logs/                       # Execution logs output directory
+├── templates/                  # Cisco IOS configuration templates
+│   ├── router_base.tpl         # Base router configuration template
+│   ├── switch_l2_base.tpl      # Layer 2 switch base template
+│   └── switch_l3_base.tpl      # Layer 3 switch base template
+└── vars/                       # Per-device configuration variables
+    ├── SW-DIST1.conf           # Variables for SW-DIST1
+    └── SW-DIST2.conf           # Variables for SW-DIST2
+```
+
+## Before You Begin
+
+> ⚠️ **Carefully review the following files before running any script:**
+
+### `inventory.conf`
+
+Defines the network devices that configurations will be applied to. Make sure that:
+
+- Device IPs or hostnames are correct and reachable.
+- Access credentials or methods (SSH key, username) are properly configured.
+- Device groups are correctly defined for your environment.
+
+### `vars/` Directory
+
+Contains the variables that parameterize the configuration templates. Review each `.conf` file and verify that:
+
+- VLAN IDs, interface names, IP ranges, and protocol settings (HSRP, STP, VTP, etc.) match your actual infrastructure.
+- There are no naming conflicts between device-specific variable files.
+- Test environment variables do not accidentally overwrite production settings.
+
+### `templates/` Directory
+
+Contains IOS/IOS-XE command templates that are rendered and pushed to devices. Verify that:
+
+- Configuration blocks (interfaces, routing, ACLs, etc.) are correct for the target device model and IOS version.
+- All variables referenced in templates (`{{ variable }}`) have a corresponding entry in `vars/`.
+- Templates do not include unintended destructive commands (e.g., `no shutdown` on unintended interfaces, VLAN deletions, etc.).
+
+### `.env` File
+
+Contains global environment variables such as credentials and connection defaults. Ensure that:
+
+- Sensitive values are not committed to version control (`.env` should be in `.gitignore`).
+- All required variables are populated before running `deploy.sh`.
+
+## Usage
+
+```bash
+# Clone the repository
+git clone https://github.com/usuario/cisco-bash-config.git
+cd Cisco_Deployment_Learning
+
+# Check dependencies
+bash check_deps.sh
+
+# Review and edit the inventory
+nano inventory.conf
+
+# Review device variables
+nano vars/SW-DIST1.conf
+
+# Run the deployment script
+bash deploy.sh
+```
+
+> `sudo` is not used at any step. If any script prompts for a root password, stop execution and open an issue.
+
+## Contributing
+
+1. Fork the repository.
+2. Create a branch for your feature or fix: `git checkout -b feature/my-improvement`
+3. Commit your changes: `git commit -m "feat: description of change"`
+4. Open a Pull Request describing the changes made.
+
+## License
+
+MIT License — see the `LICENSE` file for details.

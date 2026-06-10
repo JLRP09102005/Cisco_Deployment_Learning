@@ -5,7 +5,7 @@ ip domain-name __DOMAIN__
 no ip domain-lookup
 service password-encryption
 enable secret __SECRET:ENABLESECRET__ algorithm-type scrypt
-username admin privilege 15 secret __SECRET:USERPASS__
+username __USER__ privilege 15 secret __SECRET:USERPASS__
 banner motd ^__MOTDBANNER__^
 ntp server __NTPSERVER__
 ip routing

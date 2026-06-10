@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## render_template TPL_FILE ASSOC_ARRAY_NAME HOST USER
-render_template()
+render_and_deploy()
 {
     [[ ! -f "$1" ]] && return
     [[ -z "$2" ]] && return
