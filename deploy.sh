@@ -45,10 +45,8 @@ for((i=0;i < $index;i++)); do
 
     [[ -f "${VARS_DIR}/${matrix[$i,2]}.conf" ]] && source "${VARS_DIR}/${matrix[$i,2]}.conf"
 
-    while read -r line; do
+    build_device_array "device_vars" "matrix" "$index"
 
-        
-
-    done < "$file_template"
+    echo "${#device_vars[@]}"
 
 done

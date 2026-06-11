@@ -42,7 +42,7 @@ vlan 999
  exit
 interface vlan 10
  ip address __SVI_10_IP__ __SVI_10_MASK__
- ip ospf 1 area __OSPF_AREA__
+ ip ospf 1 area __OSPF_AREA_VLAN10__
  standby 1 ip __HSRP_GROUP1_IP__
  standby 1 priority __HSRP_GROUP1_PRIORITY__
  standby 1 preempt
@@ -51,7 +51,7 @@ interface vlan 10
  exit
 interface vlan 20
  ip address __SVI_20_IP__ __SVI_20_MASK__
- ip ospf 1 area __OSPF_AREA__
+ ip ospf 1 area __OSPF_AREA_VLAN20__
  standby 2 ip __HSRP_GROUP2_IP__
  standby 2 priority __HSRP_GROUP2_PRIORITY__
  standby 2 preempt
@@ -60,7 +60,7 @@ interface vlan 20
  exit
 interface vlan 30
  ip address __SVI_30_IP__ __SVI_30_MASK__
- ip ospf 1 area __OSPF_AREA__
+ ip ospf 1 area __OSPF_AREA_VLAN30__
  standby 3 ip __HSRP_GROUP3_IP__
  standby 3 priority __HSRP_GROUP3_PRIORITY__
  standby 3 preempt
@@ -69,7 +69,7 @@ interface vlan 30
  exit
 interface vlan 40
  ip address __SVI_40_IP__ __SVI_40_MASK__
- ip ospf 1 area __OSPF_AREA__
+ ip ospf 1 area __OSPF_AREA_VLAN40__
  standby 4 ip __HSRP_GROUP4_IP__
  standby 4 priority __HSRP_GROUP4_PRIORITY__
  standby 4 preempt
@@ -78,7 +78,7 @@ interface vlan 40
  exit
 interface vlan 99
  ip address __SVI_99_IP__ __SVI_99_MASK__
- ip ospf 1 area __OSPF_AREA__
+ ip ospf 1 area __OSPF_AREA_VLAN99__
  no shutdown
  exit
 spanning-tree vlan 10 priority __STP_VLAN10_PRIORITY__
