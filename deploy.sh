@@ -29,8 +29,10 @@ while read -r line; do
 
 done < "inventory.conf"
 
-declare -A device_vars
 for((i=0;i < $index;i++)); do
+
+    (
+    declare -A device_vars
 
     file_template=""
     if [[ "${matrix[$i,1]}" == "router" ]]; then
@@ -45,8 +47,10 @@ for((i=0;i < $index;i++)); do
 
     [[ -f "${VARS_DIR}/${matrix[$i,2]}.conf" ]] && source "${VARS_DIR}/${matrix[$i,2]}.conf"
 
-    build_device_array "device_vars" "matrix" "$index"
+    build_device_array "device_vars" "matrix" "$i"
 
-    echo "${#device_vars[@]}"
+    echo "${device_vars[__HOSTNAME__]}"
+    echo "${device_vars[__DOMAIN__]}"
+    )
 
 done

@@ -47,16 +47,17 @@ render_and_deploy()
 ## build_device_array ASSOC_ARRAY_NAME ASSOC_MATRIX_NAME DEVICE_INDEX
 build_device_array()
 {
+    [[ -z "$1" ]] && { log_error "build_device_array has no assoc array arg"; exit 1; }
+    [[ -z "$2" ]] && { log_error "build_device_array has no matrix arg"; exit 1; }
+    [[ -z "$3" ]] || [[ ! "$3" =~ ^[0-9]+$ ]] && { log_error "build_device_array has no index arg"; exit 1; }
+
     local -n arr="$1"
     local -n mat="$2"
     local i=
     i="$3"
-    [[ -z "$arr" ]] && {log_error "build_device_array has no assoc array arg"; exit 1;}
-    [[ -z "$mat" ]] && {log_error "build_device_array has no matrix arg"; exit 1;}
-    [[ -z "$i" || "$i" -le 0 ]] && {log_error "build_device_array has no index arg or is below/equal 0"; exit 1;}
 
     [[ ! -z "$HOSTNAME" ]] && arr[__HOSTNAME__]="$HOSTNAME"
-    [[ ! -z "$DOMAIN"]] && arr[__DOMAIN__]="$DOMAIN"
+    [[ ! -z "$DOMAIN" ]] && arr[__DOMAIN__]="$DOMAIN"
     arr[__USER__]="${mat[$i,3]}"
     [[ ! -z "$MOTDBANNER" ]] && arr[__MOTDBANNER__]="$MOTDBANNER"
     [[ ! -z "$NTPSERVER" ]] && arr[__NTPSERVER__]="$NTPSERVER"
