@@ -25,7 +25,7 @@ render_and_deploy()
 
     while read -r line; do
 
-        if [[ "$line" =~ "^__SECRET:(.+)__$" ]]; then
+        if [[ "$line" =~ ^__SECRET:(.+)__$ ]]; then
         
             secret_name="${BASH_REMATCH[1]}"
             read -s -r -p "Write the password for $secret_name: " password
@@ -40,25 +40,25 @@ render_and_deploy()
 
     done <<<"$marks"
 
-    ssh_config "$host" "$user" "$tmpfile"
-    rm -f "$tmpfile"
+    cat "$tmpfile"
+
+    # ssh_config "$host" "$user" "$tmpfile"
+    # rm -f "$tmpfile"
 }
 
-## build_device_array ASSOC_ARRAY_NAME ASSOC_MATRIX_NAME DEVICE_INDEX
+## build_device_array ASSOC_ARRAY_NAME DEVICE_INDEX
 build_device_array()
 {
     [[ -z "$1" ]] && { log_error "build_device_array has no assoc array arg"; exit 1; }
-    [[ -z "$2" ]] && { log_error "build_device_array has no matrix arg"; exit 1; }
-    [[ -z "$3" ]] || [[ ! "$3" =~ ^[0-9]+$ ]] && { log_error "build_device_array has no index arg"; exit 1; }
+    [[ -z "$2" ]] || [[ ! "$2" =~ ^[0-9]+$ ]] && { log_error "build_device_array has no index arg"; exit 1; }
 
     local -n arr="$1"
-    local -n mat="$2"
     local i=
-    i="$3"
+    i="$2"
 
     [[ ! -z "$HOSTNAME" ]] && arr[__HOSTNAME__]="$HOSTNAME"
     [[ ! -z "$DOMAIN" ]] && arr[__DOMAIN__]="$DOMAIN"
-    arr[__USER__]="${mat[$i,3]}"
+    arr[__USER__]="${matrix[$i,3]}"
     [[ ! -z "$MOTDBANNER" ]] && arr[__MOTDBANNER__]="$MOTDBANNER"
     [[ ! -z "$NTPSERVER" ]] && arr[__NTPSERVER__]="$NTPSERVER"
 
@@ -99,5 +99,8 @@ build_device_array()
     [[ ! -z "$STP_VLAN40" ]] && arr[__STP_VLAN40_PRIORITY__]="$STP_VLAN40"
     [[ ! -z "$STP_VLAN99" ]] && arr[__STP_VLAN99_PRIORITY__]="$STP_VLAN99"
 
-    [[ ! -z "$DEFAILT_GATEWAY" ]] && arr[__DEFAULT_GATEWAY__]="$DEFAULT_GATEWAY"
+    [[ ! -z "$DEFAULT_GATEWAY" ]] && arr[__DEFAULT_GATEWAY__]="$DEFAULT_GATEWAY"
+
+    arr[__LOOPBACK_0_IP__]="${matrix[$i,0]}"
+    [[ ! -z "$LOOPBACK0_MASK" ]] && arr[__LOOPBACK0_MASK__]="$LOOPBACK0_MASK"
 }

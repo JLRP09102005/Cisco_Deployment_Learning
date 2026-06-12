@@ -43,14 +43,14 @@ for((i=0;i < $index;i++)); do
         file_template="${TEMPLATES_DIR}/switch_l2_base.tpl"
     else
         log_error "Type not found for ${matrix[$i,0]}"
+        continue
     fi
 
     [[ -f "${VARS_DIR}/${matrix[$i,2]}.conf" ]] && source "${VARS_DIR}/${matrix[$i,2]}.conf"
 
-    build_device_array "device_vars" "matrix" "$i"
+    build_device_array "device_vars" "$i" && log_ok "Associative array builded correctly"
+    render_and_deploy "$file_template" "device_vars" "${matrix[$i,0]}" "$matrix[$i,3]" && log_ok "Rendered and deployed to the device correctly for host ${matrix[$i,0]}"
 
-    echo "${device_vars[__HOSTNAME__]}"
-    echo "${device_vars[__DOMAIN__]}"
     )
 
 done
