@@ -41,10 +41,8 @@ render_and_deploy()
 
     done <<<"$marks"
 
-    cat "$tmpfile"
-
-    # ssh_config "$host" "$user" "$tmpfile"
-    # rm -f "$tmpfile"
+    ssh_config "$host" "$user" "$tmpfile"
+    rm -f "$tmpfile"
 }
 
 ## build_device_array ASSOC_ARRAY_NAME DEVICE_INDEX
