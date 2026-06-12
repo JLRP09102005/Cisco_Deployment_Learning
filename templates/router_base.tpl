@@ -18,7 +18,7 @@ router ospf 1
  passive-interface default
 exit
 interface Loopback0
- ip address __LOOPBACK_0_IP__ __LOOPBACK0_MASK__
+ ip address __LOOPBACK0_IP__ __LOOPBACK0_MASK__
  ip ospf 1 area __OSPF_AREA_LOOPBACK0__
 exit
 end

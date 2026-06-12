@@ -21,20 +21,21 @@ render_and_deploy()
     cat "$1" > "$tmpfile"
 
     local marks
-    marks="$(grep -o "__.*__" "$tmpfile")"
+    marks="$(grep -oP "__(?:(?!__).)+__" "$tmpfile")"
 
     while read -r line; do
 
         if [[ "$line" =~ ^__SECRET:(.+)__$ ]]; then
         
             secret_name="${BASH_REMATCH[1]}"
-            read -s -r -p "Write the password for $secret_name: " password
+            read -s -r -p "Write the password for $secret_name: " password </dev/tty
+            echo
             sed -i "s|$line|$password|g" "$tmpfile"
             unset password
 
         else
 
-            sed -i "s|${line}|${subs_array[$line]}|g" "$tmpfile"
+            sed -i "s|${line}|${subs_array[$line]}|" "$tmpfile"
 
         fi
 
@@ -101,6 +102,9 @@ build_device_array()
 
     [[ ! -z "$DEFAULT_GATEWAY" ]] && arr[__DEFAULT_GATEWAY__]="$DEFAULT_GATEWAY"
 
-    arr[__LOOPBACK_0_IP__]="${matrix[$i,0]}"
+    arr[__LOOPBACK0_IP__]="${matrix[$i,0]}"
     [[ ! -z "$LOOPBACK0_MASK" ]] && arr[__LOOPBACK0_MASK__]="$LOOPBACK0_MASK"
+    [[ ! -z "$OSPF_AREA_LOOPBACK0" ]] && arr[__OSPF_AREA_LOOPBACK0__]="$OSPF_AREA_LOOPBACK0"
+
+    echo "${matrix[$i,0]}"
 }
