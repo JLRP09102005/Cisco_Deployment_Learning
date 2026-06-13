@@ -22,7 +22,7 @@ log_info()
 
     local date="$(date '+%d-%m-%y_%H%M%S')"
     printf "%b%s:%s%b\n" "$BLUE" "$date" "$1" "$NC"
-    echo "[${date}]:${1}" >> "$LOG_FILE"
+    echo "[${date}] INFO ${1}" >> "$LOG_FILE"
 }
 
 log_ok()
@@ -31,7 +31,7 @@ log_ok()
 
     local date="$(date '+%d-%m-%y_%H%M%S')"
     printf "%b%s:%s%b\n" "$GREEN" "$date" "$1" "$NC"
-    echo "[${date}]:${1}" >> "$LOG_FILE"
+    echo "[${date}] OK ${1}" >> "$LOG_FILE"
 }
 
 log_warn()
@@ -40,7 +40,7 @@ log_warn()
 
     local date="$(date '+%d-%m-%y_%H%M%S')"
     printf "%b%s:%s%b\n" "$YELLOW" "$date" "$1" "$NC"
-    echo "[${date}]:${1}" >> "$LOG_FILE"
+    echo "[${date}] WARN ${1}" >> "$LOG_FILE"
 }
 
 log_error()
@@ -49,5 +49,5 @@ log_error()
 
     local date="$(date '+%d-%m-%y_%H%M%S')"
     printf "%b%s:%s%b\n" "$RED" "$date" "$1" "$NC"
-    echo "[${date}]:${1}" >> "$LOG_FILE"
+    echo "[${date}] ERROR ${1}" >> "$LOG_FILE"
 }

@@ -16,7 +16,7 @@ render_and_deploy()
     user="$4"
     declare -n subs_array="$2"
 
-    [[ "${#subs_array[@]}" -eq 0 ]] && return
+    [[ "${#subs_array[@]}" -eq 0 ]] && { log_error "The assoc array needed at render_and_deploy is empty for ${matrix[$i,0]} host"; return;}
 
     cat "$1" > "$tmpfile"
 
@@ -30,18 +30,20 @@ render_and_deploy()
             secret_name="${BASH_REMATCH[1]}"
             read -s -r -p "Write the password for $secret_name: " password </dev/tty
             echo
-            sed -i "s|$line|$password|g" "$tmpfile"
+            sed -i "s|$line|$password|" "$tmpfile" 2> /dev/null || log_error "Replacement failed for ${secret_name}, hostname ${matrix[$i,0]}"
             unset password
 
         else
 
-            sed -i "s|${line}|${subs_array[$line]}|" "$tmpfile"
+            sed -i "s|${line}|${subs_array[$line]}|" "$tmpfile" 2> /dev/null || log_error "Replacement failed for ${line}, hostname ${matrix[$i,0]}"
 
         fi
 
     done <<<"$marks"
 
-    ssh_config "$host" "$user" "$tmpfile"
+    ssh_config "$host" "$user" "$tmpfile" 2>/tmp/ssh_err.tmp
+    [ $? -eq 0 ] && log_ok "tmp file sended via ssh successfully for ${matrix[$i,0]} host" || log_error "$(cat "/tmp/ssh_err.tmp")" && rm -f "/tmp/ssh_err.tmp"
+
     rm -f "$tmpfile"
 }
 
@@ -103,6 +105,5 @@ build_device_array()
     arr[__LOOPBACK0_IP__]="${matrix[$i,0]}"
     [[ ! -z "$LOOPBACK0_MASK" ]] && arr[__LOOPBACK0_MASK__]="$LOOPBACK0_MASK"
     [[ ! -z "$OSPF_AREA_LOOPBACK0" ]] && arr[__OSPF_AREA_LOOPBACK0__]="$OSPF_AREA_LOOPBACK0"
-
-    echo "${matrix[$i,0]}"
+    
 }
